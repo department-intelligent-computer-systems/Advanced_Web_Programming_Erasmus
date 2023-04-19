@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SchoolRegister.Model.DataModels;
+
 namespace SchoolRegister.DAL.EF;
 public class ApplicationDbContext : IdentityDbContext<User, Role, int>
 {
@@ -35,6 +36,10 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int>
         .HasValue<Student>((int)RoleValue.Student)
         .HasValue<Parent>((int)RoleValue.Parent)
         .HasValue<Teacher>((int)RoleValue.Teacher);
+    modelBuilder.Entity<Student>()
+        .HasOne(s => s.Parent)
+        .WithOne(s=> s.ParentId)
+        .OnDelete(DeleteBehavior.SetNull);
     modelBuilder.Entity<SubjectGroup>()
         .HasKey(sg => new { sg.GroupId, sg.SubjectId });
     modelBuilder.Entity<SubjectGroup>()
@@ -55,3 +60,13 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int>
         .OnDelete(DeleteBehavior.Restrict);
     }
 }
+
+/*
+
+dotnet add SchoolRegister.DAL/SchoolRegister.DAL.csproj package Microsoft.EntityFrameworkCore --version 6.0.9
+dotnet add SchoolRegister.DAL/SchoolRegister.DAL.csproj package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 6.0.9
+dotnet add SchoolRegister.DAL/SchoolRegister.DAL.csproj package Microsoft.EntityFrameworkCore.Proxies --version 6.0.9
+dotnet add SchoolRegister.DAL/SchoolRegister.DAL.csproj package Microsoft.EntityFrameworkCore.Design --version 6.0.9
+dotnet add SchoolRegister.DAL/SchoolRegister.DAL.csproj package Microsoft.EntityFrameworkCore.SqlServer --version 6.0.9
+
+*/
