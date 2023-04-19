@@ -36,10 +36,11 @@ public class ApplicationDbContext : IdentityDbContext<User, Role, int>
         .HasValue<Student>((int)RoleValue.Student)
         .HasValue<Parent>((int)RoleValue.Parent)
         .HasValue<Teacher>((int)RoleValue.Teacher);
+
     modelBuilder.Entity<Student>()
         .HasOne(s => s.Parent)
-        .WithOne(s=> s.ParentId)
-        .OnDelete(DeleteBehavior.SetNull);
+        .WithMany(s=> s.Students)
+        .OnDelete(DeleteBehavior.NoAction);
     modelBuilder.Entity<SubjectGroup>()
         .HasKey(sg => new { sg.GroupId, sg.SubjectId });
     modelBuilder.Entity<SubjectGroup>()
