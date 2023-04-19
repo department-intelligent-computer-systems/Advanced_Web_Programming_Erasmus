@@ -1,12 +1,16 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SchoolRegister.Model.DataModels
 {
     public class SubjectGroup
     {
-        public Subject Subject {get; set;} = default!;
-        public int SubjectId {get; set;} = default!;
-        public Group Group {get; set;} = default!;
-        public int GroupId {get; set;} = default!;
+        public virtual Subject Subject {get; set;} = default!;
+        [ForeignKey("Subject")]
+        public int? SubjectId {get; set;} = default!;
+        public virtual Group Group {get; set;} = default!;
+        [ForeignKey("Group")]
+        public int? GroupId {get; set;} = default!;
     }
 }

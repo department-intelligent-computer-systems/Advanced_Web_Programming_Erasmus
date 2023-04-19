@@ -10,7 +10,8 @@ namespace SchoolRegister.Model.DataModels
         public virtual Subject Subject {get; set;} = default!;
         [ForeignKey("Subject")]
         public int SubjectId {get; set;} = default!;
+        [ForeignKey("Student")]
         public int StudentId {get; set;} = default!;
-        public Student Student {get; set;} = default!;
+        public virtual Student Student {get; set;} = default!;
     }
 }
